@@ -1,69 +1,105 @@
-import Image from "next/image";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight, GraduationCap, Heart, Mail, User } from "lucide-react";
+
+const sections = [
+  {
+    title: "About Me",
+    href: "/about",
+    icon: User,
+    description: "Learn more about my background, story, and technical skillset.",
+  },
+  {
+    title: "Education",
+    href: "/education",
+    icon: GraduationCap,
+    description: "Explore my academic background, degrees, and key highlights.",
+  },
+  {
+    title: "Hobbies & Interests",
+    href: "/hobbies",
+    icon: Heart,
+    description: "Discover what I enjoy doing outside of coding and development.",
+  },
+  {
+    title: "Contact Me",
+    href: "/contact",
+    icon: Mail,
+    description: "Have a question, collaboration idea, or project in mind? Reach out.",
+  },
+];
+
+const skills = [
+  "JavaScript / TypeScript",
+  "React & Next.js",
+  "Tailwind CSS",
+  "Node.js & Express",
+  "MySQL / Oracle",
+  "Git & GitHub",
+  "REST APIs & GraphQL",
+  "Shadcn UI",
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="space-y-8 max-w-4xl mx-auto">
+      <div className="space-y-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Welcome to DevPortfolio</h1>
+          <p className="text-muted-foreground mt-1 max-w-2xl">
+            Full-stack developer building clean, modern, and responsive web applications with Next.js, TypeScript, and Shadcn UI.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <Link href="/about" className={buttonVariants()}>
+            About Me <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+          <Link href="/contact" className={buttonVariants({ variant: "outline" })}>
+            Contact Me
+          </Link>
         </div>
-      </main>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {sections.map((section) => {
+          const Icon = section.icon;
+          return (
+            <Link key={section.href} href={section.href} className="block">
+              <Card className="h-full hover:shadow-md transition-shadow">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 bg-primary/10 rounded-lg text-primary">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <CardTitle className="text-lg">{section.title}</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">{section.description}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          );
+        })}
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Core Technologies</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2">
+            {skills.map((skill) => (
+              <Badge key={skill} variant="secondary" className="text-sm px-3 py-1">
+                {skill}
+              </Badge>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
